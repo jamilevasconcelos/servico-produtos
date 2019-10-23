@@ -19,7 +19,7 @@ public class Produto {
 	public int minima;
 	public int maxima;
 	public int fornecedor;
-	
+	public double valor;
 	
 	public Long getId() {
 		return id;
@@ -54,14 +54,23 @@ public class Produto {
 	public int getFornecedor() {
 		return fornecedor;
 	}
+	
 	public void setFornecedor(int fornecedor) {
 		this.fornecedor = fornecedor;
 	}
 	
-	//implementar
-	public boolean checaSeQuantidadeMinima(){
-			return getQtdd() <= getMinima();
+	public double getValor() {
+		return valor;
 	}
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
+	
+//	//implementar
+//	public boolean checaSeQuantidadeMinima(){
+//			return getQtdd() <= getMinima();
+//	}
 	
 	
 }

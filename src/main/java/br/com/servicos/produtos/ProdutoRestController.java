@@ -29,20 +29,13 @@ public class ProdutoRestController {
 		return "Hello Mundo";
 	}
 	
-	//buscar todos
+	// buscar todos produtos
 	@GetMapping("/api/produtos")
-	public List<Produto> retrieveAllProduto() {
-		System.out.println("\n\n\nteste\n\n\n");
+	public List<Produto> buscaTodosProduto() {
 		return produtoRepository.findAll();
 	}
-
-//	@GetMapping(path="/api/produtos")
-//	public @ResponseBody Iterable<Produto> getAllProdutos() {
-//		System.out.println("\n\n\nteste\n\n\n");
-//		return produtoRepository.findAll();
-//	}
 	
-	//GET - lista produtos por id
+	// buscar produtos por id
 	@GetMapping("/api/produtos/{id}")
 	public Produto buscaProdutoPorId(@PathVariable Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
@@ -50,22 +43,30 @@ public class ProdutoRestController {
 		if (!produto.isPresent())
 			throw new RuntimeException("id-" + id);
 		
-		System.out.println("\n\n\nteste\n\n\n");
 		return produto.get();
 	}
-	
-	//POST - novo registro de produto
+
+//	// checa quantidade
+//	@GetMapping("/api/produtos/checaquantidademinima")
+//	public Produto checaSeQuantidadeMinima() {
+//		Optional<Produto> produto = produtoRepository.findById(id);
+//		produtos = produtoRepository.findAll();
+//
+//		return produto.get();
+//	}
+//	
+	// adicionar 
 	// VER ESTE SITE PARA IMPLEMENTACAO
 	// https://www.oracle.com/technetwork/pt/articles/dsl/crud-rest-sb2-hibernate-5302424-ptb.html
-	@PostMapping("/produtos")
-	public ResponseEntity<Object> createProduto(@RequestBody Produto produto) {
+	@PostMapping("/api/produtos")
+	public ResponseEntity<Object> novoProduto(@RequestBody Produto produto) {
 		Produto savedproduto = produtoRepository.save(produto);
-
+		System.out.println("teste");
+		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(savedproduto.getId()).toUri();
 
 		return ResponseEntity.created(location).build();
-
 	}
 	
 	
