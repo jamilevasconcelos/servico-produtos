@@ -1,6 +1,7 @@
 package br.com.servicos.produtos;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,18 +47,7 @@ public class ProdutoRestController {
 		return produto.get();
 	}
 
-//	// checa quantidade
-//	@GetMapping("/api/produtos/checaquantidademinima")
-//	public Produto checaSeQuantidadeMinima() {
-//		Optional<Produto> produto = produtoRepository.findById(id);
-//		produtos = produtoRepository.findAll();
-//
-//		return produto.get();
-//	}
-//	
-	// adicionar 
-	// VER ESTE SITE PARA IMPLEMENTACAO
-	// https://www.oracle.com/technetwork/pt/articles/dsl/crud-rest-sb2-hibernate-5302424-ptb.html
+	// cadastrar novo produto 
 	@PostMapping("/api/produtos")
 	public ResponseEntity<Object> novoProduto(@RequestBody Produto produto) {
 		Produto savedproduto = produtoRepository.save(produto);
@@ -68,6 +58,32 @@ public class ProdutoRestController {
 
 		return ResponseEntity.created(location).build();
 	}
+
+//	//buscar por nome
+//	@GetMapping("/api/produtos/checarsequantidademinima")
+//	public List<Produto> retrieveAllAgendabyNome() {
+//		System.out.println("Necessário repor estoque para o item: ");				
+//		return produtoRepository.findIfMinima();
+//
+//	}
+
+	// checar se atingiu quantidade minima
+	@GetMapping("/api/produtos/checarsequantidademinima")
+	public  List<Produto> checarSeQuantidadeMinima() {
+		
+		List<Produto> todosprodutos = new ArrayList<Produto>(produtoRepository.findAll());		
+		List<Produto> comprasnecessarias = new ArrayList<Produto>();
+				
+		for (int i = 0; i < todosprodutos.size(); i++) {
+			if  (todosprodutos.getQtdd() <= (todosprodutos.getMinima())) {
+				comprasnecessarias.add(todosprodutos[i]);
+				System.out.println("Necessário repor estoque para o item: ");				
+
+			}
+		}	
+		return comprasnecessarias;		
+	}
+	
 	
 	
 }
