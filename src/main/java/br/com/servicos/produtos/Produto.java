@@ -67,10 +67,4 @@ public class Produto {
 	}
 
 	
-//	//implementar
-//	public boolean checaSeQuantidadeMinima(){
-//			return getQtdd() <= getMinima();
-//	}
-	
-	
 }

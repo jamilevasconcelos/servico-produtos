@@ -12,10 +12,4 @@ import br.com.servicos.produtos.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-	@Query("SELECT p.id, p.nome, p.qtdd, "
-			+ "p.minima, p.maxima, p.fornecedor, p.valor "
-			+ "FROM Produto AS p "
-			+ "WHERE p.qtdd <= p.minima")
-	List<Produto> findIfMinima( );
-
 }

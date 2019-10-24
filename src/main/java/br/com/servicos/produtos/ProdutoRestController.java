@@ -25,10 +25,6 @@ public class ProdutoRestController {
 	@Autowired	
 	public ProdutoRepository produtoRepository;
 	
-	@GetMapping(value="/hello") 	
-	public String hello (){
-		return "Hello Mundo";
-	}
 	
 	// buscar todos produtos
 	@GetMapping("/api/produtos")
@@ -59,31 +55,23 @@ public class ProdutoRestController {
 		return ResponseEntity.created(location).build();
 	}
 
-//	//buscar por nome
-//	@GetMapping("/api/produtos/checarsequantidademinima")
-//	public List<Produto> retrieveAllAgendabyNome() {
-//		System.out.println("Necessário repor estoque para o item: ");				
-//		return produtoRepository.findIfMinima();
-//
-//	}
-//
-//	// checar se atingiu quantidade minima
-//	@GetMapping("/api/produtos/checarsequantidademinima")
-//	public  List<Produto> checarSeQuantidadeMinima() {
-//		
-//		List<Produto> todosprodutos = new ArrayList<Produto>(produtoRepository.findAll());		
-//		List<Produto> comprasnecessarias = new ArrayList<Produto>();
-//				
-//		for (int i = 0; i < todosprodutos.size(); i++) {
-//			if  (todosprodutos.getQtdd() <= (todosprodutos.getMinima())) {
-//				comprasnecessarias.add(todosprodutos[i]);
-//				System.out.println("Necessário repor estoque para o item: ");				
-//
-//			}
-//		}	
-//		return comprasnecessarias;		
-//	}
-//	
+
+	// checar se quantidade do produto está abaixo da quantidade minima
+	@GetMapping("/api/produtos/checarsequantidademinima")
+	public  List<Produto> checarSeQuantidadeMinima() {
+		
+		List<Produto> todosprodutos = new ArrayList<Produto>(produtoRepository.findAll());		
+		List<Produto> comprasnecessarias = new ArrayList<Produto>();
+				
+		for (int i = 0; i < todosprodutos.size(); i++) {
+			Produto produto = todosprodutos.get(i);
+			if  (produto.getQtdd() <= produto.getMinima()) {
+				comprasnecessarias.add(produto);
+			}
+		}	
+		return comprasnecessarias;		
+	}
+	
 	
 	
 }
