@@ -66,24 +66,24 @@ public class ProdutoRestController {
 //		return produtoRepository.findIfMinima();
 //
 //	}
-
-	// checar se atingiu quantidade minima
-	@GetMapping("/api/produtos/checarsequantidademinima")
-	public  List<Produto> checarSeQuantidadeMinima() {
-		
-		List<Produto> todosprodutos = new ArrayList<Produto>(produtoRepository.findAll());		
-		List<Produto> comprasnecessarias = new ArrayList<Produto>();
-				
-		for (int i = 0; i < todosprodutos.size(); i++) {
-			if  (todosprodutos.getQtdd() <= (todosprodutos.getMinima())) {
-				comprasnecessarias.add(todosprodutos[i]);
-				System.out.println("Necessário repor estoque para o item: ");				
-
-			}
-		}	
-		return comprasnecessarias;		
-	}
-	
+//
+//	// checar se atingiu quantidade minima
+//	@GetMapping("/api/produtos/checarsequantidademinima")
+//	public  List<Produto> checarSeQuantidadeMinima() {
+//		
+//		List<Produto> todosprodutos = new ArrayList<Produto>(produtoRepository.findAll());		
+//		List<Produto> comprasnecessarias = new ArrayList<Produto>();
+//				
+//		for (int i = 0; i < todosprodutos.size(); i++) {
+//			if  (todosprodutos.getQtdd() <= (todosprodutos.getMinima())) {
+//				comprasnecessarias.add(todosprodutos[i]);
+//				System.out.println("Necessário repor estoque para o item: ");				
+//
+//			}
+//		}	
+//		return comprasnecessarias;		
+//	}
+//	
 	
 	
 }
