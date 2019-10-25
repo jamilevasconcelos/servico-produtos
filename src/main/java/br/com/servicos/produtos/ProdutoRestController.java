@@ -87,8 +87,7 @@ public class ProdutoRestController {
 										 + produto.getId() + ", 'fornecedor': " 
 										 + produto.getFornecedor() + " '}";
 
-				 ResponseEntity.status(HttpStatus.CREATED).body(produto.getNome());
-//				ResponseEntity.status(HttpStatus.OK).body("Produto requisitado:" + produto.getNome());
+			    ResponseEntity.status(HttpStatus.OK).body(jsonInputString);
 
 				try(BufferedReader br = new BufferedReader(
 				  new InputStreamReader(con.getInputStream(), "utf-8"))) {
@@ -98,7 +97,6 @@ public class ProdutoRestController {
 				        response.append(responseLine.trim());
 				    }
 					
-
 				    System.out.println(response.toString());
 				}
 			}
