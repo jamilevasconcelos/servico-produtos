@@ -71,7 +71,7 @@ public class ProdutoRestController {
 		
 		List<Produto> todosprodutos = new ArrayList<Produto>(produtoRepository.findAll());		
 
-		URL url = new URL("https://compra-2.free.beeceptor.com");
+		URL url = new URL("http://webhook.site/1c3652d7-e9b2-46bc-8edd-6a2de79f2790");
 
 		for (int i = 0; i < todosprodutos.size(); i++) {
 			Produto produto = todosprodutos.get(i);
@@ -87,7 +87,8 @@ public class ProdutoRestController {
 										 + produto.getId() + ", 'fornecedor': " 
 										 + produto.getFornecedor() + " '}";
 
-				ResponseEntity.status(HttpStatus.OK).body("Produto requisitado:" + produto.getNome());
+				 ResponseEntity.status(HttpStatus.CREATED).body(produto.getNome());
+//				ResponseEntity.status(HttpStatus.OK).body("Produto requisitado:" + produto.getNome());
 
 				try(BufferedReader br = new BufferedReader(
 				  new InputStreamReader(con.getInputStream(), "utf-8"))) {
