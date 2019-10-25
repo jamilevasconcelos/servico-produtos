@@ -56,13 +56,12 @@ public class ProdutoRestController {
 	@PostMapping("/api/produtos")
 	public ResponseEntity<Object> novoProduto(@RequestBody Produto produto) {
 		Produto savedproduto = produtoRepository.save(produto);
-		System.out.println("teste");
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(savedproduto.getId()).toUri();
 
 //		 ResponseEntity.created(location).build();
-		 return ResponseEntity.status(HttpStatus.OK).body("Item incluído com sucesso!");
+		 return ResponseEntity.status(HttpStatus.CREATED).body(savedproduto);
 	}
 
 
@@ -72,7 +71,7 @@ public class ProdutoRestController {
 		
 		List<Produto> todosprodutos = new ArrayList<Produto>(produtoRepository.findAll());		
 
-		URL url = new URL("https://compra.free.beeceptor.com");
+		URL url = new URL("https://compra-2.free.beeceptor.com");
 
 		for (int i = 0; i < todosprodutos.size(); i++) {
 			Produto produto = todosprodutos.get(i);
