@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.omg.CORBA.portable.OutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,7 +61,8 @@ public class ProdutoRestController {
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(savedproduto.getId()).toUri();
 
-		return ResponseEntity.created(location).build();
+//		 ResponseEntity.created(location).build();
+		 return ResponseEntity.status(HttpStatus.OK).body("Item incluído com sucesso!");
 	}
 
 
@@ -85,7 +87,9 @@ public class ProdutoRestController {
 				String jsonInputString = "{'datahora': " + LocalDateTime.now() + " 'produto': " 
 										 + produto.getId() + ", 'fornecedor': " 
 										 + produto.getFornecedor() + " '}";
-				
+
+				ResponseEntity.status(HttpStatus.OK).body("Produto requisitado:" + produto.getNome());
+
 				try(BufferedReader br = new BufferedReader(
 				  new InputStreamReader(con.getInputStream(), "utf-8"))) {
 				    StringBuilder response = new StringBuilder();
@@ -93,13 +97,11 @@ public class ProdutoRestController {
 				    while ((responseLine = br.readLine()) != null) {
 				        response.append(responseLine.trim());
 				    }
-				    
+					
+
 				    System.out.println(response.toString());
 				}
 			}
 		}	
 	}
-	
-	
-	
 }
