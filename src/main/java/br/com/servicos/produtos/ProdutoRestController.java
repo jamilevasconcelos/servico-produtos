@@ -67,14 +67,16 @@ public class ProdutoRestController {
 
 	// checar se quantidade do produto está abaixo da quantidade minima
 	@GetMapping("/api/produtos/checarsequantidademinima")
-	public void checarSeQuantidadeMinima() throws IOException {
+	public ResponseEntity<Object> checarSeQuantidadeMinima() throws IOException {
 		
 		List<Produto> todosprodutos = new ArrayList<Produto>(produtoRepository.findAll());		
-
+		List<String> paracomprar = new ArrayList<>();		
+		
 		URL url = new URL("http://webhook.site/1c3652d7-e9b2-46bc-8edd-6a2de79f2790");
 
 		for (int i = 0; i < todosprodutos.size(); i++) {
 			Produto produto = todosprodutos.get(i);
+
 			if  (produto.getQtdd() <= produto.getMinima()) {
 			
 				HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -83,12 +85,12 @@ public class ProdutoRestController {
 				con.setRequestProperty("Accept", "application/json");
 				con.setDoOutput(true);
 				
-				String jsonInputString = "{'datahora': " + LocalDateTime.now() + " 'produto': " 
-										 + produto.getId() + ", 'fornecedor': " 
-										 + produto.getFornecedor() + " '}";
-
-			    ResponseEntity.status(HttpStatus.OK).body(jsonInputString);
-
+//				String jsonInputString = "{'datahora': " + LocalDateTime.now() + " 'produto': " 
+//										 + produto.getId() + ", 'fornecedor': " 
+//										 + produto.getFornecedor() + " '}";
+				
+				paracomprar.add(produto.getNome());
+				
 				try(BufferedReader br = new BufferedReader(
 				  new InputStreamReader(con.getInputStream(), "utf-8"))) {
 				    StringBuilder response = new StringBuilder();
@@ -101,5 +103,7 @@ public class ProdutoRestController {
 				}
 			}
 		}	
+		
+		return ResponseEntity.status(HttpStatus.OK).body(paracomprar);
 	}
 }
